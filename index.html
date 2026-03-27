@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        /* Container for Centering and Spacing */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Typography */
+        h1, h2 {
+            text-align: center;
+            color: #222;
+            margin-bottom: 20px;
+        }
+
+        p {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        /* Section Spacing */
+        section {
+            margin-bottom: 60px;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        /* Projects Grid Layout */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        /* Responsive Grid for Desktop */
+        @media (min-width: 600px) {
+            .projects-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* Project Card Styling */
+        .project-card {
+            background-color: #fafafa;
+            border: 1px solid #eaeaea;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+
+        .project-card h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .project-card p {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        /* Coming Soon Badge */
+        .coming-soon {
+            display: inline-block;
+            background-color: #e2e8f0;
+            color: #475569;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        /* Contact Details Layout */
+        .contact-details {
+            text-align: center;
+        }
+
+        .contact-details p {
+            margin-bottom: 10px;
+        }
+
+        .contact-details a {
+            color: #0056b3;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .contact-details a:hover {
+            text-decoration: underline;
+        }
+
+        /* Theme Toggle styles */
+        .theme-toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 20px 20px 0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .theme-label {
+            margin-right: 10px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            color: #555;
+            transition: color 0.4s ease;
+        }
+
+        .theme-toggle-label {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+        }
+
+        .theme-toggle-label input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #4a5568;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(24px);
+        }
+
+        /* Smooth Theme Transitions */
+        body, section, .project-card, h1, h2, h3, p, a, .coming-soon {
+            transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, transform 0.2s ease;
+        }
+
+        /* Dark Mode Colors */
+        body.dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        body.dark-mode .theme-label {
+            color: #e0e0e0;
+        }
+        body.dark-mode h1, body.dark-mode h2, body.dark-mode h3 {
+            color: #ffffff;
+        }
+        body.dark-mode p {
+            color: #bbbbbb;
+        }
+        body.dark-mode section {
+            background-color: #1e1e1e;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        body.dark-mode .project-card {
+            background-color: #2a2a2a;
+            border-color: #444;
+        }
+        body.dark-mode .project-card:hover {
+            box-shadow: 0 6px 12px rgba(255,255,255,0.05);
+        }
+        body.dark-mode .coming-soon {
+            background-color: #444;
+            color: #ccc;
+        }
+        body.dark-mode .contact-details a {
+            color: #66b3ff;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Theme Toggle -->
+    <div class="theme-toggle-container">
+        <span class="theme-label" id="theme-label">Light Mode</span>
+        <label class="theme-toggle-label">
+            <input type="checkbox" id="theme-toggle" aria-label="Toggle Dark Mode">
+            <span class="slider"></span>
+        </label>
+    </div>
+
+    <div class="container">
+
+        <!-- About Me Section -->
+        <section id="about">
+            <h2>About Me</h2>
+            <p>
+                Hello! I am an enthusiastic beginner stepping into the vast world of technology and cybersecurity. 
+                I spend my time learning about system vulnerabilities, understanding networking concepts, and building 
+                small projects to sharpen my technical skills.
+            </p>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects">
+            <h2>Projects</h2>
+            <div class="projects-grid">
+                
+                <!-- Project 1 -->
+                <div class="project-card">
+                    <h3>Network Scanner</h3>
+                    <p>A basic python script designed to map local network devices and discover open ports.</p>
+                    <span class="coming-soon">Coming Soon</span>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="project-card">
+                    <h3>Malware Sandbox</h3>
+                    <p>An isolated virtual machine environment configured for safe, basic malware analysis.</p>
+                    <span class="coming-soon">Coming Soon</span>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="project-card">
+                    <h3>Secure Password Gen</h3>
+                    <p>A command-line tool that generates complex, cryptographically secure passwords.</p>
+                    <span class="coming-soon">Coming Soon</span>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact">
+            <h2>Contact</h2>
+            <div class="contact-details">
+                <p>I am always eager to learn from others and discuss tech!</p>
+                <p>Email: <a href="mailto:yourname@email.com">yourname@email.com</a></p>
+                <p>LinkedIn: <a href="https://linkedin.com/in/yourprofile" target="_blank">linkedin.com/in/yourprofile</a></p>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        const toggle = document.getElementById('theme-toggle');
+        const themeLabel = document.getElementById('theme-label');
+        
+        // Listen for toggle switch changes
+        toggle.addEventListener('change', () => {
+            if (toggle.checked) {
+                document.body.classList.add('dark-mode');
+                themeLabel.textContent = 'Dark Mode';
+            } else {
+                document.body.classList.remove('dark-mode');
+                themeLabel.textContent = 'Light Mode';
+            }
+        });
+    </script>
+</body>
+</html>
