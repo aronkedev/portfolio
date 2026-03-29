@@ -133,14 +133,32 @@
             text-decoration: none;
             font-size: 0.9rem;
             font-weight: 500;
-            transition: opacity 0.25s ease;
+            transition: opacity 0.25s ease, color 0.25s ease;
             position: relative;
             z-index: 1;
             padding: 6px 12px;
+            opacity: 0.55;
         }
 
         .glass-nav a:hover {
             opacity: 1;
+        }
+
+        .glass-nav a.active-link {
+            opacity: 1;
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        body.dark-mode .glass-nav a.active-link {
+            text-shadow: 0 0 12px rgba(255, 255, 255, 0.35);
+        }
+
+        /* Reduced Motion Support */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                transition-duration: 0.3s !important;
+            }
         }
 
         /* Theme Toggle */
@@ -283,6 +301,37 @@
             display: flex;
             flex-direction: column;
             transition: border-color 0.25s ease, background-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.07) 0%, transparent 70%);
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            left: var(--glow-x, 50%);
+            top: var(--glow-y, 50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 0;
+        }
+
+        body:not(.dark-mode) .project-card::before {
+            background: radial-gradient(circle, rgba(120, 119, 198, 0.10) 0%, transparent 70%);
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
+        }
+
+        .project-card > * {
+            position: relative;
+            z-index: 1;
         }
 
         .project-card:hover {
@@ -292,8 +341,8 @@
         }
 
         body.dark-mode .project-card:hover {
-            border-color: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
         }
 
         .project-card h3 {
@@ -462,6 +511,166 @@
         .modal-body li {
             margin-bottom: 10px;
         }
+
+        /* Social Icons */
+        .social-icons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-top: 32px;
+        }
+
+        .social-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            text-decoration: none;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .social-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--text-main);
+            transition: fill 0.25s ease;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-4px) scale(1.08);
+            border-color: rgba(150, 150, 150, 0.4);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        body.dark-mode .social-icon:hover {
+            box-shadow: 0 8px 24px rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Contact Form */
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 8px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background-color: var(--surface-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.925rem;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            outline: none;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease;
+            box-sizing: border-box;
+            resize: none;
+        }
+
+        .contact-form input::placeholder,
+        .contact-form textarea::placeholder {
+            color: var(--text-muted);
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            border-color: rgba(150, 150, 150, 0.5);
+            box-shadow: 0 0 0 3px rgba(120, 119, 198, 0.12);
+        }
+
+        body.dark-mode .contact-form input:focus,
+        body.dark-mode .contact-form textarea:focus {
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.05);
+        }
+
+        .contact-form button[type="submit"] {
+            align-self: flex-start;
+            padding: 10px 24px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        .contact-form button[type="submit"]:hover {
+            opacity: 0.85;
+            transform: translateY(-1px);
+        }
+
+        .form-status {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            min-height: 20px;
+            transition: color 0.3s ease;
+        }
+
+        .form-status.success {
+            color: #4ade80;
+        }
+
+        /* Copy Email */
+        .email-copy-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        .email-display {
+            font-size: 0.925rem;
+            color: var(--text-muted);
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            padding: 10px 16px;
+            border-radius: 8px;
+            letter-spacing: 0.01em;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .copy-btn {
+            padding: 10px 18px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .copy-btn:hover {
+            background-color: var(--hover-color);
+            border-color: var(--text-muted);
+            transform: translateY(-1px);
+        }
+
+        .copy-btn.copied {
+            color: #4ade80;
+            border-color: #4ade80;
+        }
     </style>
 </head>
 <body class="dark-mode">
@@ -498,6 +707,24 @@
                 <p style="font-size: 1.1rem; max-width: 520px; margin: 0 auto; color: var(--text-muted); line-height: 1.6;">Frontend Developer with an interest in Cybersecurity</p>
                 <div style="margin-top: 40px;">
                     <a href="#work" class="github-link nav-link" style="padding: 12px 24px; font-size: 0.95rem;">View My Work</a>
+                </div>
+                <div class="social-icons">
+                    <!-- GitHub -->
+                    <a href="https://github.com/aronkedev" target="_blank" class="social-icon" aria-label="GitHub">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                    </a>
+                    <!-- LinkedIn -->
+                    <a href="https://linkedin.com/in/aronke" target="_blank" class="social-icon" aria-label="LinkedIn">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </a>
+                    <!-- Twitter -->
+                    <a href="https://twitter.com/placeholder" target="_blank" class="social-icon" aria-label="Twitter / X">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    </a>
+                    <!-- Instagram -->
+                    <a href="https://instagram.com/placeholder" target="_blank" class="social-icon" aria-label="Instagram">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+                    </a>
                 </div>
             </div>
         </section>
@@ -541,7 +768,7 @@
                 <div class="project-card">
                     <h3>Portfolio Website</h3>
                     <p>A fully responsive personal portfolio crafted from scratch with HTML, CSS, and JavaScript. Features a seamless dark/light mode toggle, dual animated canvas backgrounds — a starfield and a live tech-network — glassmorphism UI components, and a smooth liquid navigation bar.</p>
-                    <a href="https://github.com/Aronke97/portfolio" class="github-link">View on GitHub</a>
+                    <a href="https://github.com/aronkedev/portfolio" class="github-link">View on GitHub</a>
                 </div>
 
                 <!-- Project 2 -->
@@ -576,16 +803,46 @@
         <section id="contact">
             <h2>Contact</h2>
             <div class="projects-grid">
+
+                <!-- Contact Form Card -->
                 <div class="project-card">
-                    <h3>LinkedIn</h3>
-                    <p>Find me on LinkedIn for professional updates and to connect.</p>
-                    <a href="https://linkedin.com/in/Aronke97" target="_blank" class="github-link">View Profile</a>
+                    <h3>Send a Message</h3>
+                    <form class="contact-form" id="contact-form" novalidate>
+                        <input type="text" id="form-name" placeholder="Your Name" required />
+                        <input type="email" id="form-email" placeholder="Your Email" required />
+                        <textarea id="form-message" placeholder="Your Message" rows="4" required></textarea>
+                        <button type="submit">Send Message</button>
+                        <p class="form-status" id="form-status"></p>
+                    </form>
                 </div>
+
+                <!-- Email + LinkedIn Card -->
                 <div class="project-card">
-                    <h3>Email</h3>
-                    <p>Open to opportunities, collaborations, or just a conversation about tech.</p>
-                    <a href="/cdn-cgi/l/email-protection#2041524f4e4b45191760474d41494c0e434f4d" class="github-link">Send Email</a>
+                    <h3>Get In Touch</h3>
+                    <p>Open to opportunities, collaborations, or just a chat about tech.</p>
+                    <div class="email-copy-wrapper">
+                        <span class="email-display">aronemsy@gmail.com</span>
+                        <button class="copy-btn" id="copy-btn" onclick="copyEmail()">Copy Email</button>
+                    </div>
+                    <div style="margin-top: 20px;">
+                        <a href="https://linkedin.com/in/aronke" target="_blank" class="github-link">LinkedIn Profile</a>
+                    </div>
+                    <div class="social-icons" style="justify-content: flex-start; margin-top: 24px;">
+                        <a href="https://github.com/aronkedev" target="_blank" class="social-icon" aria-label="GitHub">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                        </a>
+                        <a href="https://linkedin.com/in/aronke" target="_blank" class="social-icon" aria-label="LinkedIn">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                        </a>
+                        <a href="https://twitter.com/placeholder" target="_blank" class="social-icon" aria-label="Twitter / X">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        </a>
+                        <a href="https://instagram.com/placeholder" target="_blank" class="social-icon" aria-label="Instagram">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+                        </a>
+                    </div>
                 </div>
+
             </div>
         </section>
 
@@ -602,7 +859,7 @@
         </div>
     </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script>
         const toggle = document.getElementById('theme-toggle');
         const themeLabel = document.getElementById('theme-label');
 
@@ -811,15 +1068,25 @@
         const navBlob = document.getElementById('nav-blob');
         const sections = document.querySelectorAll('div.container section');
 
-        window.addEventListener('DOMContentLoaded', () => {
-            if (window.location.hash) {
-                const targetId = window.location.hash.substring(1);
-                const targetSection = document.getElementById(targetId);
-                if (targetSection) {
-                    sections.forEach(sec => sec.classList.remove('active-section'));
-                    targetSection.classList.add('active-section');
+        // Set active nav link
+        function setActiveLink(id) {
+            navLinks.forEach(link => {
+                link.classList.remove('active-link');
+                if (link.getAttribute('href') === `#${id}`) {
+                    link.classList.add('active-link');
                 }
+            });
+        }
+
+        // On load, set active from hash or default to home
+        window.addEventListener('DOMContentLoaded', () => {
+            const hash = window.location.hash ? window.location.hash.substring(1) : 'home';
+            const targetSection = document.getElementById(hash);
+            if (targetSection) {
+                sections.forEach(sec => sec.classList.remove('active-section'));
+                targetSection.classList.add('active-section');
             }
+            setActiveLink(hash);
         });
 
         navLinks.forEach(link => {
@@ -832,6 +1099,7 @@
                 if (targetSection) {
                     targetSection.classList.add('active-section');
                     window.history.pushState(null, null, `#${targetId}`);
+                    setActiveLink(targetId);
                 }
             });
 
@@ -849,6 +1117,52 @@
 
         navContainer.addEventListener('mouseleave', () => {
             navBlob.style.opacity = '0';
+        });
+
+        // --- Scroll-Spy: Blob slides to active nav link ---
+        function updateBlobToActive() {
+            const activeLink = document.querySelector('.nav-link.active-link');
+            if (activeLink) {
+                const rect = activeLink.getBoundingClientRect();
+                const containerRect = navContainer.getBoundingClientRect();
+                navBlob.style.opacity = '1';
+                navBlob.style.width = `${rect.width}px`;
+                navBlob.style.left = `${rect.left - containerRect.left}px`;
+                navBlob.style.height = `${rect.height}px`;
+            }
+        }
+
+        // Update blob whenever active link changes
+        const originalSetActiveLink = setActiveLink;
+        function setActiveLinkAndBlob(id) {
+            originalSetActiveLink(id);
+            setTimeout(updateBlobToActive, 10);
+        }
+
+        // Override clicks to also update blob
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                setTimeout(updateBlobToActive, 20);
+            });
+        });
+
+        // Blob fades when hovering nav, returns on mouseleave
+        navContainer.addEventListener('mouseleave', () => {
+            updateBlobToActive();
+        });
+
+        // Init blob on load
+        setTimeout(updateBlobToActive, 100);
+
+        // --- Gravity Glow: Cards follow cursor ---
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--glow-x', `${x}px`);
+                card.style.setProperty('--glow-y', `${y}px`);
+            });
         });
 
         // --- Skill Modal ---
@@ -895,6 +1209,49 @@
                 modal.classList.remove('active');
             }
         });
+
+        // --- Contact Form ---
+        const contactForm = document.getElementById('contact-form');
+        const formStatus = document.getElementById('form-status');
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('form-name').value.trim();
+            const email = document.getElementById('form-email').value.trim();
+            const message = document.getElementById('form-message').value.trim();
+
+            if (!name || !email || !message) {
+                formStatus.textContent = 'Please fill in all fields.';
+                formStatus.className = 'form-status';
+                return;
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                formStatus.textContent = 'Please enter a valid email address.';
+                formStatus.className = 'form-status';
+                return;
+            }
+
+            // Placeholder submit — ready for backend
+            formStatus.textContent = '✅ Message sent! I\'ll get back to you soon.';
+            formStatus.className = 'form-status success';
+            contactForm.reset();
+            setTimeout(() => { formStatus.textContent = ''; }, 4000);
+        });
+
+        // --- Copy Email ---
+        function copyEmail() {
+            navigator.clipboard.writeText('aronemsy@gmail.com').then(() => {
+                const btn = document.getElementById('copy-btn');
+                btn.textContent = 'Copied! ✅';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = 'Copy Email';
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
     </script>
 </body>
 </html>
