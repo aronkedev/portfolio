@@ -456,9 +456,7 @@
             transform: translateY(-1px);
         }
 
-        /* --- Hero Button Scanner Effect ---
-           A periodic laser sweep and localized pulse on hover 
-        */
+        /* Hero Button Scanner Effect */
         .hero-btn {
             position: relative;
             overflow: hidden;
@@ -587,10 +585,7 @@
             max-width: 580px;
             width: 90%;
             position: relative;
-            /* 
-               Initial state for "Genie Warp" (vacuum distortion) 
-               Controls the starting point of the skill card expansion 
-            */
+            /* Initial state for "Genie Warp" (vacuum distortion) */
             transform-origin: center;
             transform: translate(var(--genie-x, 0), var(--genie-y, 0)) 
                        scale(0) 
@@ -827,9 +822,7 @@
             color: #4ade80;
         }
 
-        /* --- Premium Cinematic Focus Reveal ---
-           Starts out-of-focus and blurry, then snaps into perfect focus 
-        */
+        /* Premium Cinematic Focus Reveal */
         .focus-container {
             display: inline-block;
             position: relative;
@@ -1311,11 +1304,7 @@
         window.addEventListener('resize', initTechCanvas);
         initTechCanvas();
 
-        /**
-         * Performance Optimization:
-         * Reduces node density on mobile devices to preserve battery and maintain high FPS.
-         */
-        // Use existing isMobile declared in the starry-canvas section
+        // Performance Optimization: Mobile node count
         const nodeCount = isMobile ? 35 : 80;
 
         for (let i = 0; i < nodeCount; i++) {
@@ -1417,10 +1406,7 @@
                 nameElement.classList.add('revealed');
             }
 
-            /**
-             * --- Terminal Boot Sequence (Typewriter) ---
-             * Simulates a secure system initialization on page load.
-             */
+            // Terminal Typewriter Effect
             const taglineElement = document.getElementById('typewriter-text');
             const bootMessage = "...";
             const fullText = "Cybersecurity Student & Aspiring Ethical Hacker | Passionate about building clean, modern UIs";
@@ -1533,10 +1519,7 @@
             }
         };
 
-        /**
-         * --- Genie Modal Logic ---
-         * Implements a "vacuum" warp effect based on the triggered card position.
-         */
+        // Genie Modal Expansion Logic
         skillCards.forEach(card => {
             card.addEventListener('click', (e) => {
                 const skillId = card.getAttribute('data-skill-id');
